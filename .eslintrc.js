@@ -7,6 +7,15 @@ module.exports = {
     sourceType: "module",
   },
   rules: {
+    "import/no-extraneous-dependencies": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-filename-extension": "off",
+    "import/extensions": "off",
+    "import/no-unresolved": "off",
+    "import/no-import-module-exports": "off",
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": "error",
+    "@typescript-eslint/no-unused-vars": "error",
     curly: "error",
     "no-var": "error",
     strict: ["error", "never"],
@@ -20,7 +29,6 @@ module.exports = {
     "no-fallthrough": "error",
     "no-implicit-coercion": "error",
     "no-loop-func": "error",
-    "no-restricted-imports": ["error", { patterns: ["./", "../"] }],
     "no-unused-vars": [
       "error",
       {
@@ -46,6 +54,19 @@ module.exports = {
     ],
     "prettier/prettier": "error",
   },
+  overrides: [
+    {
+      files: ["src/**/*.{js,jsx,ts,tsx}"],
+      rules: {
+        "no-restricted-imports": [
+          "error",
+          {
+            patterns: ["./", "../"],
+          },
+        ],
+      },
+    },
+  ],
   settings: {
     "import/resolver": {
       node: {
