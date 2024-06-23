@@ -1,10 +1,27 @@
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react"
 import { MemoryRouter as Router, Routes, Route } from "react-router-dom"
 import icon from "@/assets/icon.svg"
 import "@/renderer/App.css"
 
+const buttonStyle = css`
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`
+
 function Hello() {
   return (
     <div>
+      <div css={buttonStyle}>Click me</div>
       <div className="Hello">
         <img width="200" alt="icon" src={icon} />
       </div>
