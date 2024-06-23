@@ -1,0 +1,14 @@
+{
+  "printWidth": 120,
+  "trailingComma": "es5",
+  "parser": "typescript",
+  "semi": false,
+  "overrides": [
+    {
+      "files": "*.md",
+      "options": {
+        "parser": "markdown-nocjsp"
+      }
+    }
+  ]
+}
