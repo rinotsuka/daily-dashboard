@@ -1,16 +1,28 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react"
+import { useEffect, useState } from "react"
 import dayjs from "dayjs"
 
-// 現在の日付と時刻を取得
-const now = dayjs()
-const hour = now.format("HH")
-const minute = now.format("mm")
-
-export default function Clock() {
-  return <div css={styles.root}>{`${hour}:${minute}`}</div>
+const styles = {
+  root: css`
+    font-size: 2rem;
+    text-align: center;
+  `,
 }
 
-const styles = {
-  root: css``,
+export default function Clock() {
+  const [time, setTime] = useState(dayjs())
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setTime(dayjs())
+    }, 1000)
+
+    return () => clearInterval(intervalId)
+  }, [])
+
+  const hour = time.format("HH")
+  const minute = time.format("mm")
+
+  return <div css={styles.root}>{`${hour}:${minute}`}</div>
 }
