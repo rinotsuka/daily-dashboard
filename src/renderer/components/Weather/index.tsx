@@ -58,10 +58,7 @@ type WeatherData = {
 }
 
 type UVData = {
-  hourly: {
-    dt: number
-    uvi: number
-  }[]
+  value: number
 }
 
 type ForecastData = {
@@ -109,23 +106,32 @@ const getUVIndexLevel = (uvIndex: number) => {
   }
 }
 
-const getPressureLevel = (pressure: number) => {
-  if (pressure < 980) {
-    return "非常に低い"
-  } else if (pressure < 1000) {
-    return "低い"
-  } else if (pressure < 1020) {
+const getPressureChangeLevel = (pressureChange: number) => {
+  if (pressureChange < 2) {
+    return "非常に安定"
+  } else if (pressureChange < 5) {
+    return "安定"
+  } else if (pressureChange < 8) {
     return "中程度"
-  } else if (pressure < 1040) {
-    return "高い"
+  } else if (pressureChange < 10) {
+    return "変動"
   } else {
-    return "非常に高い"
+    return "急激な変動"
   }
 }
 
-const getStrongUVWarning = (hourlyUV: { dt: number; uvi: number }[]) => {
-  const strongUV = hourlyUV.some((hour) => hour.uvi >= 6) // 中程度以上
-  return strongUV
+const checkPressureChange = (forecastList: ForecastData["list"]) => {
+  let highestChange = 0
+  for (let i = 1; i < forecastList.length; i++) {
+    const prevPressure = forecastList[i - 1].main.pressure
+    const currentPressure = forecastList[i].main.pressure
+    const pressureChange = Math.abs(currentPressure - prevPressure)
+
+    if (pressureChange > highestChange) {
+      highestChange = pressureChange
+    }
+  }
+  return highestChange
 }
 
 export default function Weather() {
@@ -133,9 +139,7 @@ export default function Weather() {
   const [humidity, setHumidity] = useState<number | null>(null)
   const [weatherEmoji, setWeatherEmoji] = useState<string>("")
   const [uvIndex, setUvIndex] = useState<number | null>(null)
-  const [pressureToday, setPressureToday] = useState<number | null>(null)
-  const [pressureTomorrow, setPressureTomorrow] = useState<number | null>(null)
-  const [uvWarning, setUvWarning] = useState<boolean>(false)
+  const [pressureLevel, setPressureLevel] = useState<string | null>(null)
 
   const fetchWeather = async () => {
     try {
@@ -152,28 +156,16 @@ export default function Weather() {
       const forecastResponse = await axios.get<ForecastData>(
         `https://api.openweathermap.org/data/2.5/forecast?q=${CITY}&appid=${API_KEY}&units=metric&lang=ja`
       )
-      const todayForecast = forecastResponse.data.list.find(
-        (forecast) =>
-          forecast.dt_txt.includes("12:00:00") && new Date(forecast.dt_txt).getDate() === new Date().getDate()
-      )
-      const tomorrowForecast = forecastResponse.data.list.find(
-        (forecast) =>
-          forecast.dt_txt.includes("12:00:00") && new Date(forecast.dt_txt).getDate() === new Date().getDate() + 1
-      )
-      if (todayForecast) {
-        setPressureToday(todayForecast.main.pressure)
-      }
-      if (tomorrowForecast) {
-        setPressureTomorrow(tomorrowForecast.main.pressure)
-      }
+      const forecastList = forecastResponse.data.list
+
+      const highestPressureChange = checkPressureChange(forecastList)
+      setPressureLevel(getPressureChangeLevel(highestPressureChange))
 
       // UVインデックスの取得
       const uvResponse = await axios.get<UVData>(
-        `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,daily,alerts&appid=${API_KEY}`
+        `https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&appid=${API_KEY}`
       )
-      const currentUV = uvResponse.data.hourly[0].uvi
-      setUvIndex(currentUV)
-      setUvWarning(getStrongUVWarning(uvResponse.data.hourly))
+      setUvIndex(uvResponse.data.value)
     } catch (error) {
       console.error("天気情報の取得に失敗しました")
     }
@@ -192,15 +184,7 @@ export default function Weather() {
       <div css={styles.humidity}>{humidity !== null ? `湿度: ${humidity}%` : "取得中..."}</div>
       <div css={styles.emoji}>{weatherEmoji}</div>
       <div css={styles.uvIndex}>{uvIndex !== null ? `UVインデックス: ${getUVIndexLevel(uvIndex)}` : "取得中..."}</div>
-      {pressureToday !== null && <div css={styles.pressure}>{`今日の気圧: ${getPressureLevel(pressureToday)}`}</div>}
-      {pressureTomorrow !== null && (
-        <div css={styles.pressure}>{`明日の気圧: ${getPressureLevel(pressureTomorrow)}`}</div>
-      )}
-      {uvWarning ? (
-        <div css={styles.warning}>⚠️ 今日のUVインデックスが高い時間帯がありますので注意してください</div>
-      ) : (
-        <div css={styles.okay}>✅ UVインデックスは問題ありません</div>
-      )}
+      {pressureLevel && <div css={styles.pressure}>{`気圧の変動: ${pressureLevel}`}</div>}
     </div>
   )
 }
