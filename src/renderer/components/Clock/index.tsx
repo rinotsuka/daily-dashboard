@@ -16,7 +16,7 @@ export default function Clock() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       setTime(dayjs())
-    }, 1000)
+    }, 100)
 
     return () => clearInterval(intervalId)
   }, [])
