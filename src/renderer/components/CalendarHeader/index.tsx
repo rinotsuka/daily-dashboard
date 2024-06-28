@@ -61,11 +61,10 @@ const styles = {
     right: 0;
   `,
   today: css`
-    opacity: 0.5;
+    opacity: 0;
     position: absolute;
     top: 0;
     left: 0;
-    background-color: red;
     width: 100%;
     height: 35px;
   `,
