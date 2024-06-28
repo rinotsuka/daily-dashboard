@@ -19,5 +19,9 @@ export default function App() {
 }
 
 const styles = {
-  root: css``,
+  root: css`
+    background-color: #000;
+    font-family: "Work Sans", sans-serif;
+    color: #f1f5f9;
+  `,
 }

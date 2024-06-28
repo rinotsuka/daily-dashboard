@@ -1,30 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react"
-import dayjs, { Dayjs } from "dayjs"
-
-const styles = {
-  table: css`
-    width: 100%;
-    border-collapse: collapse;
-  `,
-  cell: css`
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-  `,
-  diffMonth: css`
-    color: #ccc;
-  `,
-  saturday: css`
-    background-color: #f0f8ff;
-  `,
-  sunday: css`
-    background-color: #ffe4e1;
-  `,
-  holiday: css`
-    background-color: #ffebcd;
-  `,
-}
+import { Dayjs } from "dayjs"
 
 type CalendarTableProps = {
   currentDate: Dayjs
@@ -76,16 +52,48 @@ export function CalendarTable({ currentDate, holidays }: CalendarTableProps) {
     <table css={styles.table}>
       <thead>
         <tr>
-          <th css={styles.cell}>日</th>
-          <th css={styles.cell}>月</th>
-          <th css={styles.cell}>火</th>
-          <th css={styles.cell}>水</th>
-          <th css={styles.cell}>木</th>
-          <th css={styles.cell}>金</th>
-          <th css={styles.cell}>土</th>
+          <th css={[styles.cell, styles.week, styles.sunday]}>日</th>
+          <th css={[styles.cell, styles.week]}>月</th>
+          <th css={[styles.cell, styles.week]}>火</th>
+          <th css={[styles.cell, styles.week]}>水</th>
+          <th css={[styles.cell, styles.week]}>木</th>
+          <th css={[styles.cell, styles.week]}>金</th>
+          <th css={[styles.cell, styles.week, styles.saturday]}>土</th>
         </tr>
       </thead>
       <tbody>{generateCalendar()}</tbody>
     </table>
   )
+}
+
+const styles = {
+  table: css`
+    width: 100%;
+  `,
+  cell: css`
+    border: none;
+    font-weight: 500;
+    font-size: 16px;
+    text-align: center;
+    letter-spacing: 1.5;
+    color: #e2e8f0;
+    padding: 10px 14px;
+  `,
+  week: css`
+    font-family: "Kosugi Maru", sans-serif;
+    font-family: 700;
+    font-size: 15px;
+  `,
+  diffMonth: css`
+    color: #334155 !important;
+  `,
+  saturday: css`
+    color: #60a5fa;
+  `,
+  sunday: css`
+    color: #f87171;
+  `,
+  holiday: css`
+    color: #f87171;
+  `,
 }

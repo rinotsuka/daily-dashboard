@@ -10,6 +10,9 @@ const styles = {
   `,
 }
 
+// 令和年の計算
+// const reiwaYear = currentDate.year() - 2018
+
 export default function Clock() {
   const [time, setTime] = useState(dayjs())
 

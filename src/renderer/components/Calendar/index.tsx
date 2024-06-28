@@ -13,10 +13,6 @@ dayjs.extend(weekday)
 dayjs.extend(advancedFormat)
 dayjs.locale("ja")
 
-const styles = {
-  root: css``,
-}
-
 type HolidayData = {
   [key: string]: string
 }
@@ -42,14 +38,18 @@ export default function Calendar() {
 
   const prevMonth = () => setCurrentDate(currentDate.subtract(1, "month"))
   const nextMonth = () => setCurrentDate(currentDate.add(1, "month"))
-
-  // 令和年の計算
-  const reiwaYear = currentDate.year() - 2018
+  const today = () => setCurrentDate(dayjs())
 
   return (
     <div css={styles.root}>
-      <CalendarHeader currentDate={currentDate} reiwaYear={reiwaYear} onPrevMonth={prevMonth} onNextMonth={nextMonth} />
+      <CalendarHeader currentDate={currentDate} onPrevMonth={prevMonth} onNextMonth={nextMonth} onToday={today} />
       <CalendarTable currentDate={currentDate} holidays={holidays} />
     </div>
   )
+}
+
+const styles = {
+  root: css`
+    width: 347px;
+  `,
 }

@@ -1,44 +1,72 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react"
-import dayjs, { Dayjs } from "dayjs"
-
-const styles = {
-  header: css`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-  `,
-  title: css`
-    font-size: 1.5rem;
-  `,
-  button: css`
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    cursor: pointer;
-  `,
-}
+import { Dayjs } from "dayjs"
 
 type CalendarHeaderProps = {
   currentDate: Dayjs
-  reiwaYear: number
   onPrevMonth: () => void
   onNextMonth: () => void
+  onToday: () => void
 }
 
-export function CalendarHeader({ currentDate, reiwaYear, onPrevMonth, onNextMonth }: CalendarHeaderProps) {
+export function CalendarHeader({ currentDate, onPrevMonth, onNextMonth, onToday }: CalendarHeaderProps) {
   return (
     <div css={styles.header}>
-      <button css={styles.button} onClick={onPrevMonth}>
-        前の月
-      </button>
       <div css={styles.title}>
-        <h1>{`令和${reiwaYear}年`}</h1>
-        <h2>{currentDate.format("YYYY年MM月")}</h2>
+        <div css={styles.day}>
+          <span>{currentDate.format("M")}</span>
+          <span css={styles.unit}>月</span>
+        </div>
       </div>
-      <button css={styles.button} onClick={onNextMonth}>
-        次の月
-      </button>
+      <button css={[styles.button, styles.prev]} onClick={onPrevMonth} />
+      <button css={[styles.button, styles.next]} onClick={onNextMonth} />
+      <button css={[styles.button, styles.today]} onClick={onToday} />
     </div>
   )
+}
+
+const styles = {
+  header: css`
+    position: relative;
+    align-items: center;
+    margin-bottom: 8px;
+  `,
+  title: css``,
+  day: css`
+    font-family: "Lato", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+  `,
+  unit: css`
+    display: inline-block;
+    font-family: "Lato", sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    margin-left: 2px;
+  `,
+  button: css`
+    opacity: 0;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    border: none;
+    width: 50%;
+    height: 285px;
+  `,
+  prev: css`
+    left: 0;
+  `,
+  next: css`
+    right: 0;
+  `,
+  today: css`
+    opacity: 0.5;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: red;
+    width: 100%;
+    height: 35px;
+  `,
 }
