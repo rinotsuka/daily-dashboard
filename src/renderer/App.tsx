@@ -26,16 +26,14 @@ const styles = {
   root: css`
     display: flex;
     justify-content: space-between;
-    align-items: center;
     background-color: #000;
     font-family: "Work Sans", "Kosugi Maru", sans-serif;
     color: #e2e8f0;
     height: 100vh;
-    padding-left: 24px;
-    padding-right: 24px;
+    padding: 0 24px;
   `,
   right: css`
-    padding-bottom: 8px;
+    padding: 48px 0 8px;
   `,
   left: css``,
 }

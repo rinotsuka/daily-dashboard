@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react"
-import { Dayjs } from "dayjs"
+import dayjs, { Dayjs } from "dayjs"
 
 type CalendarTableProps = {
   currentDate: Dayjs
@@ -9,6 +9,7 @@ type CalendarTableProps = {
 
 export function CalendarTable({ currentDate, holidays }: CalendarTableProps) {
   const isHoliday = (date: Dayjs) => holidays.includes(date.format("YYYY-MM-DD"))
+  const isToday = (date: Dayjs) => date.isSame(dayjs(), "day")
 
   const generateCalendar = () => {
     const startOfMonth = currentDate.startOf("month")
@@ -35,9 +36,13 @@ export function CalendarTable({ currentDate, holidays }: CalendarTableProps) {
               isSaturday && styles.saturday,
               isSunday && styles.sunday,
               isHoliday(date) && styles.holiday,
+              isToday(date) && styles.today,
             ]}
           >
-            {date.date()}
+            <div css={styles.cellInner}>
+              {date.date()}
+              <span></span>
+            </div>
           </td>
         )
         date = date.add(1, "day")
@@ -79,9 +84,15 @@ const styles = {
     color: #e2e8f0;
     padding: 8px 14px;
   `,
+  cellInner: css`
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+  `,
   week: css`
     font-family: "Kosugi Maru", sans-serif;
-    font-family: 700;
+    font-weight: 700;
     font-size: 15px;
   `,
   diffMonth: css`
@@ -95,5 +106,19 @@ const styles = {
   `,
   holiday: css`
     color: #f87171;
+  `,
+  today: css`
+    span {
+      display: inline-block;
+      transform: translate(-50%, -50%);
+      position: absolute;
+      top: calc(50% + 14px);
+      left: 50%;
+      z-index: 1;
+      border-radius: 99px;
+      background-color: #6ee7b7;
+      width: 12px;
+      height: 4px;
+    }
   `,
 }
