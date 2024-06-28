@@ -75,9 +75,9 @@ const styles = {
     font-weight: 500;
     font-size: 16px;
     text-align: center;
-    letter-spacing: 1.5;
+    letter-spacing: 1.5px;
     color: #e2e8f0;
-    padding: 10px 14px;
+    padding: 8px 14px;
   `,
   week: css`
     font-family: "Kosugi Maru", sans-serif;

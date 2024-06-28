@@ -9,19 +9,33 @@ import CO2 from "@/renderer/components/CO2"
 export default function App() {
   return (
     <div css={styles.root}>
-      <Calendar />
-      <Clock />
-      <Weather />
-      <RoomTemperature />
-      <CO2 />
+      <div css={styles.left}>
+        <Weather />
+        <RoomTemperature />
+        <CO2 />
+      </div>
+      <div css={styles.right}>
+        <Clock />
+        <Calendar />
+      </div>
     </div>
   )
 }
 
 const styles = {
   root: css`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: #000;
-    font-family: "Work Sans", sans-serif;
-    color: #f1f5f9;
+    font-family: "Work Sans", "Kosugi Maru", sans-serif;
+    color: #e2e8f0;
+    height: 100vh;
+    padding-left: 24px;
+    padding-right: 24px;
   `,
+  right: css`
+    padding-bottom: 8px;
+  `,
+  left: css``,
 }

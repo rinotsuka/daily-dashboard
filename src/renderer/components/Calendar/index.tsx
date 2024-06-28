@@ -50,6 +50,6 @@ export default function Calendar() {
 
 const styles = {
   root: css`
-    width: 347px;
+    width: 368px;
   `,
 }

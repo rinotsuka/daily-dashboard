@@ -27,22 +27,19 @@ export function CalendarHeader({ currentDate, onPrevMonth, onNextMonth, onToday 
 
 const styles = {
   header: css`
-    position: relative;
     align-items: center;
+    position: relative;
     margin-bottom: 8px;
   `,
   title: css``,
   day: css`
-    font-family: "Lato", sans-serif;
     font-size: 18px;
-    font-weight: 700;
+    font-weight: 500;
     text-align: center;
   `,
   unit: css`
     display: inline-block;
-    font-family: "Lato", sans-serif;
     font-size: 11px;
-    font-weight: 700;
     margin-left: 2px;
   `,
   button: css`
