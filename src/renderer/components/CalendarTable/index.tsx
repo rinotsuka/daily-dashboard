@@ -116,7 +116,7 @@ const styles = {
       left: 50%;
       z-index: 1;
       border-radius: 99px;
-      background-color: #6ee7b7;
+      background-color: #34d399;
       width: 12px;
       height: 4px;
     }
