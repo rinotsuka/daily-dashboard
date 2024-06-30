@@ -29,8 +29,9 @@ export function CalendarHeader({ currentDate, onPrevMonth, onNextMonth, onToday 
 
 const styles = {
   header: css`
-    align-items: center;
     position: relative;
+    z-index: 4;
+    align-items: center;
     margin-bottom: 8px;
   `,
   title: css``,
