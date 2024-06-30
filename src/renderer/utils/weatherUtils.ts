@@ -1,25 +1,3 @@
-export const getWeatherEmoji = (main: string): string => {
-  switch (main.toLowerCase()) {
-    case "clear":
-      return "☀️"
-    case "clouds":
-      return "☁️"
-    case "rain":
-      return "🌧️"
-    case "drizzle":
-      return "🌦️"
-    case "thunderstorm":
-      return "⛈️"
-    case "snow":
-      return "❄️"
-    case "mist":
-    case "fog":
-      return "🌫️"
-    default:
-      return "🌈"
-  }
-}
-
 export const getUVIndexLevel = (uvIndex: number): string => {
   if (uvIndex < 3) {
     return "低い"

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
-import { getWeatherEmoji, getUVIndexLevel, getPressureChangeLevel } from "@/renderer/utils/weatherUtils"
+import { getUVIndexLevel, getPressureChangeLevel } from "@/renderer/utils/weatherUtils"
 
 const API_KEY = "0258e4ad783ccb27bd6713b18131494c"
 const CITY = "Tokyo"
@@ -35,7 +35,7 @@ type ForecastData = {
 type WeatherState = {
   temperature: number | null
   humidity: number | null
-  weatherEmoji: string | null
+  weather: string | null
   uvIndexLevel: string | null
   pressureLevel: string | null
 }
@@ -58,7 +58,7 @@ export const useWeatherData = (): WeatherState => {
   const [data, setData] = useState<WeatherState>({
     temperature: null,
     humidity: null,
-    weatherEmoji: null,
+    weather: null,
     uvIndexLevel: null,
     pressureLevel: null,
   })
@@ -86,7 +86,7 @@ export const useWeatherData = (): WeatherState => {
       setData({
         temperature: Math.round(response.data.main.temp),
         humidity: response.data.main.humidity,
-        weatherEmoji: getWeatherEmoji(weatherMain),
+        weather: weatherMain,
         uvIndexLevel: getUVIndexLevel(uvIndexValue),
         pressureLevel: getPressureChangeLevel(highestPressureChange),
       })
