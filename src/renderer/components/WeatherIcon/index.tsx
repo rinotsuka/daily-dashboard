@@ -9,14 +9,12 @@ import snowIcon from "@/assets/icons/snow.svg"
 import fogIcon from "@/assets/icons/fog.svg"
 
 const styles = {
-  root: css`
-    font-size: 2rem;
-  `,
+  root: css``,
   icon: css`
     display: inline-block;
     stroke: #f3f4f6;
-    width: 120px;
-    height: 120px;
+    width: 160px;
+    height: 160px;
   `,
   sun: css`
     stroke: #fdba74;
@@ -70,8 +68,7 @@ export const WeatherIcon: React.FC<WeatherEmojiProps> = ({ weather }) => {
 
   return (
     <div css={styles.root}>
-      {/* <span>{weather ? weatherSvg(weather) : "🌈"}</span> */}
-      <span>{weather ? weatherSvg("fog") : "🌈"}</span>
+      <span>{weather ? weatherSvg(weather) : "🌈"}</span>
     </div>
   )
 }

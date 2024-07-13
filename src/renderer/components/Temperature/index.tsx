@@ -3,19 +3,6 @@ import { css } from "@emotion/react"
 import { ReactSVG } from "react-svg"
 import temperatureIcon from "@/assets/icons/temperature.svg"
 
-const styles = {
-  root: css`
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-  `,
-  icon: css`
-    display: inline-block;
-    stroke: #fff;
-    width: 32px;
-    height: 32px;
-  `,
-}
-
 type TemperatureProps = {
   temperature: number | null
 }
@@ -26,3 +13,20 @@ export const Temperature: React.FC<TemperatureProps> = ({ temperature }) => (
     <span>{temperature && `${temperature}°C`}</span>
   </div>
 )
+
+const styles = {
+  root: css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    margin-right: 24px;
+  `,
+  icon: css`
+    display: inline-block;
+    stroke: #e2e8f0;
+    width: 28px;
+    height: 28px;
+    margin-right: 4px;
+  `,
+}

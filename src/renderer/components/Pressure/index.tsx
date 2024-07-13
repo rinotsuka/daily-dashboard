@@ -1,14 +1,22 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react"
 
-const pressureStyle = css`
-  font-size: 1.2rem;
-`
-
 type PressureProps = {
   pressureLevel: string | null
 }
 
 export const Pressure: React.FC<PressureProps> = ({ pressureLevel }) => (
-  <div css={pressureStyle}>{pressureLevel && `気圧の変動: ${pressureLevel}`}</div>
+  <div css={styles.root}>
+    <span css={styles.prefix}>hPa</span>
+    <span>{pressureLevel}</span>
+  </div>
 )
+
+const styles = {
+  root: css`
+    font-size: 20px;
+  `,
+  prefix: css`
+    font-family: "Passion One", sans-serif;
+  `,
+}
